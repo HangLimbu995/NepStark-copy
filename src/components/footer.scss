@@ -1,0 +1,41 @@
+
+/* Separate keyframes for second-moving-text */
+$t: 20; /* number of elements */
+
+.second-moving-text ul {
+  --d: 30s; /* duration */
+
+  display: grid;
+  grid-template-columns: repeat($t, 1fr); /* number of visible images */
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.second-moving-text ul > li {
+  grid-area: 1/1;
+  animation: r2 var(--d) linear infinite;
+  font-family: system-ui;
+  font-size: 12rem;
+  min-width: max-content;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 1rem;
+  text-transform: capitalize;
+}
+
+@for $i from 2 to ($t + 1) {
+  ul > li:nth-child(#{$i}) {
+    animation-delay: calc(#{(1 - $i) / $t} * var(--d));
+  }
+}
+
+@keyframes r2 {
+  #{100 / $t}% {
+    transform: translate(-100%);
+  }
+  #{100 / $t + 0.01}% {
+    transform: translate(($t - 1) * 100%);
+  }
+}
